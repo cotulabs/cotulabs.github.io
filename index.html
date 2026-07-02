@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoTuLabs - Coming Soon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'shimmer': 'shimmer 4s linear infinite',
+                    },
+                    keyframes: {
+                        shimmer: {
+                            '0%': { 'background-position': '-200% 0' },
+                            '100%': { 'background-position': '200% 0' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body
+    class="bg-slate-950 text-slate-100 flex flex-col items-center justify-center min-h-screen p-6 overflow-hidden relative">
+
+    <div
+        class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none">
+    </div>
+    <div
+        class="absolute bottom-1/4 left-1/2 -translate-x-1/2 translate-y-1/2 w-[400px] h-[400px] bg-blue-500/10 blur-[100px] rounded-full pointer-events-none">
+    </div>
+
+    <div class="relative z-10 max-w-2xl text-center px-4">
+
+        <div class="relative inline-block mb-8 group">
+            <div
+                class="absolute -inset-1 bg-gradient-to-r block from-cyan-500 to-blue-500 rounded-full blur opacity-40 group-hover:opacity-75 transition duration-1000 group-hover:duration-200 animate-pulse-slow">
+            </div>
+            <img src="logo.png" alt="CoTuLabs Logo"
+                class="relative h-40 w-40 mx-auto rounded-full object-cover border-2 border-slate-800 bg-slate-900 shadow-2xl">
+        </div>
+
+        <h1 class="text-6xl font-black tracking-tight mb-4 select-none
+                   bg-gradient-to-r from-slate-300 via-white via-cyan-200 via-white to-slate-300 
+                   bg-[length:200%_auto] bg-clip-text text-transparent animate-shimmer">
+            CoTuLabs
+        </h1>
+
+        <p class="text-lg md:text-xl text-slate-400 max-w-xl mx-auto font-medium leading-relaxed mb-4">
+            Advancing AI Research through <span class="text-cyan-400 font-semibold">Natural Language Processing</span> &
+            <span class="text-blue-400 font-semibold">Computer Vision</span>.
+        </p>
+
+        <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/80 border border-slate-800 text-sm text-slate-400 mb-12 backdrop-blur-sm">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            Can Tho, Vietnam
+        </div>
+
+        <div class="border-t border-slate-900 pt-8">
+            <p class="text-xs uppercase tracking-[0.2em] text-slate-500 font-bold mb-3">Project Status</p>
+            <span
+                class="text-sm font-mono text-cyan-500/90 bg-cyan-950/30 border border-cyan-900/50 px-4 py-1.5 rounded-md">
+                system.init // Coming Soon
+            </span>
+        </div>
+    </div>
+
+    <footer class="absolute bottom-6 text-xs text-slate-600 font-mono">
+        &copy; 2026 CoTuLabs. All rights reserved.
+    </footer>
+
+</body>
+
+</html>
