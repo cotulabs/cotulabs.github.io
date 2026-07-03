@@ -26,43 +26,348 @@
             }
         }
     </script>
+    <style>
+        :root {
+            --transition-duration: 2s;
+            --sky-start: #020617;
+            --sky-end: #0f172a;
+            --water-start: #020617;
+            --water-end: #0c1524;
+            --glow-color-1: rgba(6, 182, 212, 0.08);
+            --glow-color-2: rgba(59, 130, 246, 0.08);
+            --celestial-color: #f8fafc;
+            --celestial-shadow: rgba(248, 250, 252, 0.25);
+            --sun-cx: 700px;
+            --sun-cy: 130px;
+            --sun-r: 45px;
+            --sun-opacity: 0;
+            --moon-opacity: 1;
+            --moon-cx: 250px;
+            --moon-cy: 100px;
+            --star-opacity: 1;
+            --bridge-color: #070b13;
+            --bridge-light-opacity: 1;
+            --bridge-light-color: #d8b4fe;
+            --palm-color: #030508;
+            --boat-color: #010204;
+            --boat-light-opacity: 1;
+            --water-ripple-opacity: 0.15;
+
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #94a3b8;
+            --heading-color: #ffffff;
+            --heading-shadow: rgba(6, 182, 212, 0.3);
+            --accent-cyan: #22d3ee;
+            --accent-blue: #60a5fa;
+            --logo-border: #1e293b;
+            --logo-bg: #0f172a;
+            --pill-bg: rgba(15, 23, 42, 0.6);
+            --pill-border: rgba(30, 41, 59, 0.8);
+            --pill-text: #cbd5e1;
+            --ict-bg: #1e293b;
+            --ict-text: #94a3b8;
+            --divider-color: rgba(15, 23, 42, 0.8);
+            --status-bg: rgba(34, 211, 238, 0.1);
+            --status-border: rgba(34, 211, 238, 0.3);
+            --status-text: #22d3ee;
+        }
+
+        body {
+            background: linear-gradient(to bottom, var(--sky-start) 0%, var(--sky-end) 100%);
+            color: var(--text-primary);
+            transition: background var(--transition-duration) ease-in-out, color var(--transition-duration) ease-in-out;
+        }
+
+        .heading {
+            color: var(--heading-color);
+            text-shadow: 0 2px 12px var(--heading-shadow);
+            transition: color var(--transition-duration) ease-in-out, text-shadow var(--transition-duration) ease-in-out;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            transition: color var(--transition-duration) ease-in-out;
+        }
+
+        .accent-cyan {
+            color: var(--accent-cyan);
+            transition: color var(--transition-duration) ease-in-out;
+        }
+
+        .accent-blue {
+            color: var(--accent-blue);
+            transition: color var(--transition-duration) ease-in-out;
+        }
+
+        .logo-img {
+            border-color: var(--logo-border);
+            background-color: var(--logo-bg);
+            transition: border-color var(--transition-duration) ease-in-out, background-color var(--transition-duration) ease-in-out;
+        }
+
+        .pill {
+            background-color: var(--pill-bg);
+            border: 1px solid var(--pill-border);
+            color: var(--pill-text);
+            backdrop-filter: blur(8px);
+            transition: all var(--transition-duration) ease-in-out;
+        }
+
+        .pill-icon {
+            color: var(--accent-cyan);
+            transition: color var(--transition-duration) ease-in-out;
+        }
+
+        .ict-tag {
+            background-color: var(--ict-bg);
+            color: var(--ict-text);
+            transition: background-color var(--transition-duration) ease-in-out, color var(--transition-duration) ease-in-out;
+        }
+
+        .divider {
+            border-color: var(--divider-color);
+            transition: border-color var(--transition-duration) ease-in-out;
+        }
+
+        .status-title {
+            color: var(--text-muted);
+            transition: color var(--transition-duration) ease-in-out;
+        }
+
+        .status-pill {
+            background-color: var(--status-bg);
+            border: 1px solid var(--status-border);
+            color: var(--status-text);
+            transition: all var(--transition-duration) ease-in-out;
+        }
+
+        .glow-1 {
+            background-color: var(--glow-color-1);
+            transition: background-color var(--transition-duration) ease-in-out;
+        }
+
+        .glow-2 {
+            background-color: var(--glow-color-2);
+            transition: background-color var(--transition-duration) ease-in-out;
+        }
+
+        .star {
+            animation: twinkle 4s ease-in-out infinite;
+        }
+        .star-fast { animation-duration: 2s; }
+        .star-medium { animation-duration: 4s; }
+        .star-slow { animation-duration: 6s; }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        .wave-1 {
+            animation: float-wave-1 16s ease-in-out infinite;
+        }
+        .wave-2 {
+            animation: float-wave-2 20s ease-in-out infinite;
+        }
+
+        @keyframes float-wave-1 {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-30px); }
+        }
+        @keyframes float-wave-2 {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(30px); }
+        }
+    </style>
 </head>
 
 <body
-    class="bg-slate-950 text-slate-100 flex flex-col items-center justify-center min-h-screen p-6 overflow-hidden relative">
+    class="flex flex-col items-center justify-start pt-[8vh] md:pt-[12vh] min-h-screen p-6 overflow-hidden relative">
 
+    
+    <div class="absolute top-4 right-4 z-50 flex items-center gap-1 p-1 rounded-full bg-slate-900/60 border border-slate-800/80 backdrop-blur-md text-xs">
+        <button onclick="setTimeMode('auto')" id="btn-auto" class="px-2.5 py-1.5 rounded-full transition-all duration-200 font-medium text-cyan-400 bg-slate-800 flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l.73-.73" />
+            </svg>
+            <span class="hidden sm:inline">Auto</span>
+        </button>
+        <button onclick="setTimeMode('morning')" id="btn-morning" class="px-2.5 py-1.5 rounded-full transition-all duration-200 font-medium text-slate-400 hover:text-slate-200 flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2v3M5.22 5.22l2.12 2.12M16.66 7.34l2.12-2.12M22 12h-3M5 12H2M12 17a5 5 0 0 0 5-5H7a5 5 0 0 0 5 5zM17 17H7M20 21H4" />
+            </svg>
+            <span class="hidden sm:inline">Morning</span>
+        </button>
+        <button onclick="setTimeMode('day')" id="btn-day" class="px-2.5 py-1.5 rounded-full transition-all duration-200 font-medium text-slate-400 hover:text-slate-200 flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="4" />
+                <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+            </svg>
+            <span class="hidden sm:inline">Day</span>
+        </button>
+        <button onclick="setTimeMode('sunset')" id="btn-sunset" class="px-2.5 py-1.5 rounded-full transition-all duration-200 font-medium text-slate-400 hover:text-slate-200 flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2v8M5.22 10.22l1.42 1.42M17.36 11.64l1.42-1.42M22 18h-12M2 18h4" />
+                <path d="M16 18a4 4 0 0 0-8 0" />
+                <path d="M20 21H4" />
+            </svg>
+            <span class="hidden sm:inline">Sunset</span>
+        </button>
+        <button onclick="setTimeMode('night')" id="btn-night" class="px-2.5 py-1.5 rounded-full transition-all duration-200 font-medium text-slate-400 hover:text-slate-200 flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+            </svg>
+            <span class="hidden sm:inline">Night</span>
+        </button>
+    </div>
+
+    
     <div
-        class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none">
+        class="glow-1 absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] blur-[120px] rounded-full pointer-events-none">
     </div>
     <div
-        class="absolute bottom-1/4 left-1/2 -translate-x-1/2 translate-y-1/2 w-[400px] h-[400px] bg-blue-500/10 blur-[100px] rounded-full pointer-events-none">
+        class="glow-2 absolute bottom-1/4 left-1/2 -translate-x-1/2 translate-y-1/2 w-[400px] h-[400px] blur-[100px] rounded-full pointer-events-none">
+    </div>
+
+    
+    <div class="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
+      <svg class="w-full h-full object-cover" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          
+          <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="var(--sky-start)" style="transition: stop-color var(--transition-duration) ease-in-out;" />
+            <stop offset="100%" stop-color="var(--sky-end)" style="transition: stop-color var(--transition-duration) ease-in-out;" />
+          </linearGradient>
+          
+          <linearGradient id="waterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="var(--water-start)" style="transition: stop-color var(--transition-duration) ease-in-out;" />
+            <stop offset="100%" stop-color="var(--water-end)" style="transition: stop-color var(--transition-duration) ease-in-out;" />
+          </linearGradient>
+
+          
+          <radialGradient id="lanternGlow" cx="50%" cy="0%" r="100%">
+            <stop offset="0%" stop-color="#fef08a" stop-opacity="0.6" />
+            <stop offset="50%" stop-color="#eab308" stop-opacity="0.2" />
+            <stop offset="100%" stop-color="#eab308" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+
+        
+        <rect width="1200" height="400" fill="url(#skyGrad)" />
+
+        
+        <g id="stars" style="opacity: var(--star-opacity); transition: opacity var(--transition-duration) ease-in-out;">
+          <circle class="star star-fast" cx="150" cy="80" r="1.5" fill="#fff" />
+          <circle class="star star-slow" cx="280" cy="120" r="1" fill="#fff" />
+          <circle class="star star-medium" cx="420" cy="60" r="2" fill="#fff" />
+          <circle class="star star-fast" cx="600" cy="100" r="1" fill="#fff" />
+          <circle class="star star-slow" cx="750" cy="70" r="1.5" fill="#fff" />
+          <circle class="star star-medium" cx="900" cy="140" r="1" fill="#fff" />
+          <circle class="star star-fast" cx="1050" cy="90" r="2" fill="#fff" />
+          <circle class="star star-slow" cx="1120" cy="110" r="1.2" fill="#fff" />
+          <circle class="star star-medium" cx="50" cy="150" r="1.5" fill="#fff" />
+        </g>
+
+        
+        
+        <circle id="sun" cx="var(--sun-cx)" cy="var(--sun-cy)" r="var(--sun-r)" fill="var(--celestial-color)" 
+                style="opacity: var(--sun-opacity); filter: drop-shadow(0 0 25px var(--celestial-shadow)); transition: all var(--transition-duration) ease-in-out;" />
+
+        
+        <path id="moon" d="M0,0 a36,36 0 0,0 50,50 a45,45 0 0,1 -50,-50" fill="var(--celestial-color)" 
+              transform="translate(250, 100)"
+              style="opacity: var(--moon-opacity); filter: drop-shadow(0 0 15px var(--celestial-shadow)); transition: opacity var(--transition-duration) ease-in-out;" />
+
+        
+        <g id="ninh-kieu-bridge" fill="var(--bridge-color)" style="transition: fill var(--transition-duration) ease-in-out;">
+          <path d="M 350 401 Q 600 380 850 401 L 850 404 Q 600 383 350 404 Z" />
+          <rect x="420" y="398" width="8" height="8" />
+          <rect x="500" y="393" width="8" height="12" />
+          <rect x="700" y="393" width="8" height="12" />
+          <rect x="780" y="398" width="8" height="8" />
+          
+          <path d="M 570 391 C 570 380, 580 375, 590 375 C 600 375, 610 380, 610 391 Z" />
+          <path d="M 575 391 C 575 383, 582 379, 590 379 C 598 379, 605 383, 605 391 Z" opacity="0.8" />
+          <path d="M 610 391 C 610 378, 620 372, 630 372 C 640 372, 650 378, 650 391 Z" />
+          <path d="M 615 391 C 615 381, 622 376, 630 376 C 638 376, 645 381, 645 391 Z" opacity="0.8" />
+        </g>
+
+        
+        <path d="M 350 401 Q 600 380 850 401" stroke="var(--bridge-light-color)" stroke-width="2" fill="none"
+              style="opacity: var(--bridge-light-opacity); filter: drop-shadow(0 0 4px var(--bridge-light-color)); transition: all var(--transition-duration) ease-in-out;" />
+        
+        
+        <circle cx="590" cy="375" r="3" fill="var(--bridge-light-color)" style="opacity: var(--bridge-light-opacity); filter: drop-shadow(0 0 3px var(--bridge-light-color)); transition: all var(--transition-duration) ease-in-out;" />
+        <circle cx="630" cy="372" r="3" fill="var(--bridge-light-color)" style="opacity: var(--bridge-light-opacity); filter: drop-shadow(0 0 3px var(--bridge-light-color)); transition: all var(--transition-duration) ease-in-out;" />
+
+        
+        <rect y="400" width="1200" height="200" fill="url(#waterGrad)" />
+
+        
+        <path class="wave-1" d="M -50 415 Q 150 408, 350 415 T 750 415 T 1150 415 T 1550 415 L 1550 600 L -50 600 Z" 
+              fill="url(#waterGrad)" opacity="0.8" />
+        <path class="wave-1" d="M -50 420 Q 200 415, 450 420 T 950 420 T 1450 420" 
+              stroke="var(--celestial-color)" stroke-width="0.8" fill="none" 
+              style="opacity: var(--water-ripple-opacity); transition: stroke var(--transition-duration) ease-in-out;" />
+
+        
+        <g fill="var(--palm-color)" style="transition: fill var(--transition-duration) ease-in-out;">
+          <path d="M -10 400 Q 100 400, 180 408 L 180 420 L -10 420 Z" />
+          <path d="M 30 403 Q 40 375, 10 360 Q 30 375, 40 403" />
+          <path d="M 30 403 Q 50 380, 50 365 Q 45 385, 30 403" />
+          <path d="M 30 403 Q 15 385, -5 375 Q 15 390, 30 403" />
+          <path d="M 100 405 Q 115 370, 95 350 Q 105 375, 100 405" />
+          <path d="M 100 405 Q 130 380, 135 360 Q 120 385, 100 405" />
+          <path d="M 100 405 Q 80 385, 65 370 Q 85 390, 100 405" />
+        </g>
+
+        
+        <g fill="var(--palm-color)" style="transition: fill var(--transition-duration) ease-in-out;">
+          <path d="M 1020 408 Q 1100 400, 1210 400 L 1210 420 L 1020 420 Z" />
+          <path d="M 1120 403 Q 1110 375, 1140 360 Q 1120 375, 1120 403" />
+          <path d="M 1120 403 Q 1090 380, 1090 365 Q 1100 385, 1120 403" />
+          <path d="M 1120 403 Q 1145 380, 1165 370 Q 1140 385, 1120 403" />
+        </g>
+
+        
+        <g id="traditional-boat">
+          <path d="M 820 460 Q 880 475, 940 460 Q 880 465, 820 460" fill="var(--boat-color)" style="transition: fill var(--transition-duration) ease-in-out;" />
+          <path d="M 865 461 Q 880 442, 895 461" fill="var(--boat-color)" style="transition: fill var(--transition-duration) ease-in-out;" />
+          <line x1="840" y1="462" x2="810" y2="475" stroke="var(--boat-color)" stroke-width="1.5" style="transition: stroke var(--transition-duration) ease-in-out;" />
+          <path d="M 845 462 C 845 456, 850 452, 854 456 C 854 462, 848 462, 845 462 Z" fill="var(--boat-color)" style="transition: fill var(--transition-duration) ease-in-out;" />
+          <circle cx="880" cy="455" r="3.5" fill="#fef08a" style="opacity: var(--boat-light-opacity); filter: drop-shadow(0 0 6px #facc15); transition: opacity var(--transition-duration) ease-in-out;" />
+          <ellipse cx="880" cy="466" rx="20" ry="4" fill="url(#lanternGlow)" style="opacity: var(--boat-light-opacity); transition: opacity var(--transition-duration) ease-in-out;" />
+        </g>
+
+        
+        <path class="wave-2" d="M -50 475 Q 200 465, 450 475 T 950 475 T 1450 475 L 1450 600 L -50 600 Z" 
+              fill="url(#waterGrad)" opacity="0.4" />
+        
+        
+        <g fill="var(--boat-color)" style="transition: fill var(--transition-duration) ease-in-out;">
+          <path d="M 320 490 Q 325 487, 330 490 Q 325 493, 320 490 Z" />
+          <path d="M 323 489 Q 325 482, 327 489 Z" />
+          <path d="M 520 530 Q 527 526, 534 530 Q 527 534, 520 530 Z" />
+          <path d="M 720 500 Q 724 497, 728 500 Q 724 503, 720 500 Z" />
+        </g>
+      </svg>
     </div>
 
     <div class="relative z-10 max-w-2xl text-center px-4">
 
-        <div class="relative inline-block mb-8 group">
+        <div class="relative w-40 h-40 mx-auto mb-8 group flex-shrink-0">
             <div
                 class="absolute -inset-1 bg-gradient-to-r block from-cyan-500 to-blue-500 rounded-full blur opacity-40 group-hover:opacity-75 transition duration-1000 group-hover:duration-200 animate-pulse-slow">
             </div>
             <img src="logo.png" alt="CoTuLabs Logo"
-                class="relative h-40 w-40 mx-auto rounded-full object-cover border-2 border-slate-800 bg-slate-900 shadow-2xl">
+                class="logo-img relative w-full h-full rounded-full object-cover border-2 shadow-2xl">
         </div>
 
-        <h1 class="text-6xl font-black tracking-tight mb-4 select-none
-                   bg-gradient-to-r from-slate-300 via-white via-cyan-200 via-white to-slate-300 
-                   bg-[length:200%_auto] bg-clip-text text-transparent animate-shimmer">
-            CoTuLabs
-        </h1>
-
-        <p class="text-lg md:text-xl text-slate-400 max-w-xl mx-auto font-medium leading-relaxed mb-4">
-            Advancing AI Research through <span class="text-cyan-400 font-semibold">Natural Language Processing</span> &
-            <span class="text-blue-400 font-semibold">Computer Vision</span>.
-        </p>
-
-        <div class="inline-flex flex-wrap items-center justify-center gap-3 mb-12">
-            <!-- Location Pill -->
+        <div class="inline-flex flex-wrap items-center justify-center gap-3 mb-6">
+            
             <div
-                class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/60 border border-slate-800/80 text-sm text-slate-300 backdrop-blur-sm hover:border-slate-700/80 transition-all duration-300">
+                class="pill inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm">
                 <span class="relative flex h-2 w-2">
                     <span
                         class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -72,45 +377,343 @@
                 <span class="text-xs">🇻🇳</span>
             </div>
 
-            <!-- Time Pill -->
+            
             <div
-                class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/60 border border-slate-800/80 text-sm text-slate-300 backdrop-blur-sm hover:border-slate-700/80 transition-all duration-300">
-                <svg class="w-4 h-4 text-cyan-400/80 animate-pulse" fill="none" viewBox="0 0 24 24"
+                class="pill inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm">
+                <svg class="pill-icon w-4 h-4 animate-pulse" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span id="vn-time" class="font-mono text-cyan-400 font-semibold tracking-wide"></span>
+                <span id="vn-time" class="font-mono accent-cyan font-semibold tracking-wide"></span>
                 <span
-                    class="text-[10px] font-bold text-slate-500 tracking-wider uppercase bg-slate-800 px-1.5 py-0.5 rounded">ICT</span>
+                    class="ict-tag text-[10px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded">ICT</span>
             </div>
         </div>
 
-        <div class="border-t border-slate-900 pt-8">
-            <p class="text-xs uppercase tracking-[0.2em] text-slate-500 font-bold mb-3">Project Status</p>
-            <span
-                class="text-sm font-mono text-cyan-500/90 bg-cyan-950/30 border border-cyan-900/50 px-4 py-1.5 rounded-md">
+        <h1 class="heading text-6xl font-black tracking-tight mb-4 select-none">
+            CoTuLabs
+        </h1>
+
+        <p class="subtitle text-lg md:text-xl max-w-xl mx-auto font-medium leading-relaxed mb-12">
+            Advancing AI Research through <span class="accent-cyan font-semibold">Natural Language Processing</span> &
+            <span class="accent-blue font-semibold">Computer Vision</span>.
+        </p>
+
+    </div>
+ 
+    <footer class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-10 w-max">
+        
+        <div class="flex flex-col items-center gap-1.5">
+            <span class="status-title text-[10px] uppercase tracking-[0.2em] font-bold">Project Status</span>
+            <span class="status-pill text-xs font-mono px-3.5 py-1 rounded-md">
                 system.init // Coming Soon
             </span>
         </div>
-    </div>
-
-    <footer class="absolute bottom-6 text-xs text-slate-600 font-mono">
-        &copy; 2026 CoTuLabs. All rights reserved.
+        
+        <p class="status-title text-[10px] font-mono opacity-75">
+            &copy; 2026 CoTuLabs. All rights reserved.
+        </p>
     </footer>
 
     <script>
+        const themes = {
+            morning: {
+                '--sky-start': '#fdba74',
+                '--sky-end': '#f472b6',
+                '--water-start': '#f43f5e',
+                '--water-end': '#e11d48',
+                '--glow-color-1': 'rgba(251, 146, 60, 0.15)',
+                '--glow-color-2': 'rgba(244, 63, 94, 0.15)',
+                '--celestial-color': '#ffedd5',
+                '--celestial-shadow': 'rgba(251, 146, 60, 0.5)',
+                '--sun-cx': 350,
+                '--sun-cy': 310,
+                '--sun-r': 40,
+                '--sun-opacity': 1,
+                '--moon-opacity': 0,
+                '--moon-cx': 250,
+                '--moon-cy': 200,
+                '--star-opacity': 0,
+                '--bridge-color': '#1c0f1c',
+                '--bridge-light-opacity': 0,
+                '--bridge-light-color': '#f472b6',
+                '--palm-color': '#130a13',
+                '--boat-color': '#0d060d',
+                '--boat-light-opacity': 0,
+                '--water-ripple-opacity': 0.2,
+                '--text-primary': '#2d0e27',
+                '--text-secondary': '#4a1d3d',
+                '--text-muted': '#5c3d52',
+                '--heading-color': '#2a0520',
+                '--heading-shadow': 'rgba(251, 146, 60, 0.2)',
+                '--accent-cyan': '#9a3412',
+                '--accent-blue': '#9d174d',
+                '--logo-border': 'rgba(251, 146, 60, 0.4)',
+                '--logo-bg': '#ffebb5',
+                '--pill-bg': 'rgba(255, 255, 255, 0.35)',
+                '--pill-border': 'rgba(251, 146, 60, 0.3)',
+                '--pill-text': '#2d1c2c',
+                '--ict-bg': 'rgba(251, 146, 60, 0.25)',
+                '--ict-text': '#7c2d12',
+                '--divider-color': 'rgba(45, 28, 44, 0.15)',
+                '--status-bg': '#ffedd5',
+                '--status-border': '#fed7aa',
+                '--status-text': '#9a3412'
+            },
+            day: {
+                '--sky-start': '#38bdf8',
+                '--sky-end': '#e0f2fe',
+                '--water-start': '#0284c7',
+                '--water-end': '#bae6fd',
+                '--glow-color-1': 'rgba(14, 165, 233, 0.12)',
+                '--glow-color-2': 'rgba(56, 189, 248, 0.12)',
+                '--celestial-color': '#fef08a',
+                '--celestial-shadow': 'rgba(253, 224, 71, 0.4)',
+                '--sun-cx': 700,
+                '--sun-cy': 130,
+                '--sun-r': 45,
+                '--sun-opacity': 1,
+                '--moon-opacity': 0,
+                '--moon-cx': 250,
+                '--moon-cy': 200,
+                '--star-opacity': 0,
+                '--bridge-color': '#0f172a',
+                '--bridge-light-opacity': 0,
+                '--bridge-light-color': '#38bdf8',
+                '--palm-color': '#090d16',
+                '--boat-color': '#030509',
+                '--boat-light-opacity': 0,
+                '--water-ripple-opacity': 0.1,
+                '--text-primary': '#0f172a',
+                '--text-secondary': '#334155',
+                '--text-muted': '#475569',
+                '--heading-color': '#0f172a',
+                '--heading-shadow': 'rgba(0, 0, 0, 0.05)',
+                '--accent-cyan': '#0369a1',
+                '--accent-blue': '#1d4ed8',
+                '--logo-border': 'rgba(14, 165, 233, 0.4)',
+                '--logo-bg': '#f0f9ff',
+                '--pill-bg': 'rgba(255, 255, 255, 0.5)',
+                '--pill-border': 'rgba(14, 165, 233, 0.25)',
+                '--pill-text': '#0f172a',
+                '--ict-bg': 'rgba(15, 23, 42, 0.1)',
+                '--ict-text': '#334155',
+                '--divider-color': 'rgba(15, 23, 42, 0.12)',
+                '--status-bg': '#e0f2fe',
+                '--status-border': '#bae6fd',
+                '--status-text': '#0369a1'
+            },
+            sunset: {
+                '--sky-start': '#4c1d95',
+                '--sky-end': '#f43f5e',
+                '--water-start': '#881337',
+                '--water-end': '#be123c',
+                '--glow-color-1': 'rgba(219, 39, 119, 0.2)',
+                '--glow-color-2': 'rgba(124, 58, 237, 0.2)',
+                '--celestial-color': '#ffe4e6',
+                '--celestial-shadow': 'rgba(244, 63, 94, 0.6)',
+                '--sun-cx': 920,
+                '--sun-cy': 320,
+                '--sun-r': 45,
+                '--sun-opacity': 1,
+                '--moon-opacity': 0,
+                '--moon-cx': 250,
+                '--moon-cy': 200,
+                '--star-opacity': 0,
+                '--bridge-color': '#1f0824',
+                '--bridge-light-opacity': 0.5,
+                '--bridge-light-color': '#fda4af',
+                '--palm-color': '#120417',
+                '--boat-color': '#0a010d',
+                '--boat-light-opacity': 0.5,
+                '--water-ripple-opacity': 0.25,
+                '--text-primary': '#fff1f2',
+                '--text-secondary': '#ffe4e6',
+                '--text-muted': '#cbd5e1',
+                '--heading-color': '#ffffff',
+                '--heading-shadow': 'rgba(244, 63, 94, 0.4)',
+                '--accent-cyan': '#fef08a',
+                '--accent-blue': '#fda4af',
+                '--logo-border': 'rgba(244, 63, 94, 0.4)',
+                '--logo-bg': '#881337',
+                '--pill-bg': 'rgba(15, 23, 42, 0.4)',
+                '--pill-border': 'rgba(244, 63, 94, 0.2)',
+                '--pill-text': '#f1f5f9',
+                '--ict-bg': 'rgba(244, 63, 94, 0.2)',
+                '--ict-text': '#ffe4e6',
+                '--divider-color': 'rgba(255, 255, 255, 0.12)',
+                '--status-bg': '#fce7f3',
+                '--status-border': '#fbcfe8',
+                '--status-text': '#9d174d'
+            },
+            night: {
+                '--sky-start': '#020617',
+                '--sky-end': '#0f172a',
+                '--water-start': '#020617',
+                '--water-end': '#0c1524',
+                '--glow-color-1': 'rgba(6, 182, 212, 0.08)',
+                '--glow-color-2': 'rgba(59, 130, 246, 0.08)',
+                '--celestial-color': '#f8fafc',
+                '--celestial-shadow': 'rgba(248, 250, 252, 0.25)',
+                '--sun-cx': 700,
+                '--sun-cy': 130,
+                '--sun-r': 45,
+                '--sun-opacity': 0,
+                '--moon-opacity': 1,
+                '--moon-cx': 250,
+                '--moon-cy': 100,
+                '--star-opacity': 1,
+                '--bridge-color': '#070b13',
+                '--bridge-light-opacity': 1,
+                '--bridge-light-color': '#d8b4fe',
+                '--palm-color': '#030508',
+                '--boat-color': '#010204',
+                '--boat-light-opacity': 1,
+                '--water-ripple-opacity': 0.15,
+                '--text-primary': '#f8fafc',
+                '--text-secondary': '#94a3b8',
+                '--text-muted': '#94a3b8',
+                '--heading-color': '#ffffff',
+                '--heading-shadow': 'rgba(6, 182, 212, 0.3)',
+                '--accent-cyan': '#22d3ee',
+                '--accent-blue': '#60a5fa',
+                '--logo-border': '#1e293b',
+                '--logo-bg': '#0f172a',
+                '--pill-bg': 'rgba(15, 23, 42, 0.6)',
+                '--pill-border': 'rgba(30, 41, 59, 0.8)',
+                '--pill-text': '#cbd5e1',
+                '--ict-bg': '#1e293b',
+                '--ict-text': '#94a3b8',
+                '--divider-color': 'rgba(15, 23, 42, 0.8)',
+                '--status-bg': 'rgba(34, 211, 238, 0.1)',
+                '--status-border': 'rgba(34, 211, 238, 0.3)',
+                '--status-text': '#22d3ee'
+            }
+        };
+
+        let currentMode = 'auto';
+
+        function applyTheme(themeName) {
+            const root = document.documentElement;
+            const theme = themes[themeName];
+            for (const [key, val] of Object.entries(theme)) {
+                root.style.setProperty(key, val);
+            }
+            
+            const sun = document.getElementById('sun');
+            const moon = document.getElementById('moon');
+            if (sun) {
+                sun.setAttribute('cx', theme['--sun-cx']);
+                sun.setAttribute('cy', theme['--sun-cy']);
+                sun.setAttribute('r', theme['--sun-r']);
+                sun.style.opacity = theme['--sun-opacity'];
+            }
+            if (moon) {
+                moon.setAttribute('transform', `translate(${theme['--moon-cx']}, ${theme['--moon-cy']})`);
+                moon.style.opacity = theme['--moon-opacity'];
+            }
+        }
+
+        function getAutoTheme(hour) {
+            if (hour >= 5 && hour < 8) return 'morning';
+            if (hour >= 8 && hour < 17) return 'day';
+            if (hour >= 17 && hour < 19) return 'sunset';
+            return 'night';
+        }
+
         function updateVNTime() {
+            const date = new Date();
             const options = {
                 timeZone: 'Asia/Ho_Chi_Minh',
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit',
-                hour12: true
+                hour12: false
             };
             const formatter = new Intl.DateTimeFormat('en-US', options);
-            document.getElementById('vn-time').textContent = formatter.format(new Date());
+            const timeStr = formatter.format(date);
+            document.getElementById('vn-time').textContent = timeStr;
+
+            const [hStr, mStr, sStr] = timeStr.split(':');
+            const hour = parseInt(hStr, 10);
+            const minute = parseInt(mStr, 10);
+            const second = parseInt(sStr, 10);
+
+            if (currentMode === 'auto') {
+                const autoTheme = getAutoTheme(hour);
+                applyTheme(autoTheme);
+
+                const t = hour + minute / 60 + second / 3600;
+                const sun = document.getElementById('sun');
+                const moon = document.getElementById('moon');
+
+                if (t >= 5 && t <= 19) {
+                    const f = (t - 5) / 14;
+                    const sunCx = 150 + f * 900;
+                    const sunCy = 80 + 250 * Math.pow(2 * f - 1, 2);
+                    
+                    let sunOpacity = 1;
+                    if (f < 0.05) sunOpacity = f / 0.05;
+                    else if (f > 0.95) sunOpacity = (1 - f) / 0.05;
+
+                    if (sun) {
+                        sun.setAttribute('cx', sunCx);
+                        sun.setAttribute('cy', sunCy);
+                        sun.style.opacity = sunOpacity;
+                    }
+                    if (moon) {
+                        moon.style.opacity = 0;
+                    }
+                    document.documentElement.style.setProperty('--star-opacity', 0);
+                } else {
+                    let tOffset = t - 19;
+                    if (tOffset < 0) tOffset += 24;
+                    const f_moon = tOffset / 10;
+                    const moonCx = 150 + f_moon * 900;
+                    const moonCy = 80 + 250 * Math.pow(2 * f_moon - 1, 2);
+
+                    let moonOpacity = 1;
+                    if (f_moon < 0.05) moonOpacity = f_moon / 0.05;
+                    else if (f_moon > 0.95) moonOpacity = (1 - f_moon) / 0.05;
+
+                    if (moon) {
+                        moon.setAttribute('transform', `translate(${moonCx}, ${moonCy})`);
+                        moon.style.opacity = moonOpacity;
+                    }
+                    if (sun) {
+                        sun.style.opacity = 0;
+                    }
+                    
+                    let starOpacity = 1;
+                    if (f_moon < 0.1) starOpacity = f_moon / 0.1;
+                    else if (f_moon > 0.9) starOpacity = (1 - f_moon) / 0.1;
+                    document.documentElement.style.setProperty('--star-opacity', starOpacity);
+                }
+            }
         }
+
+        function setTimeMode(mode) {
+            currentMode = mode;
+            const modes = ['auto', 'morning', 'day', 'sunset', 'night'];
+            modes.forEach(m => {
+                const btn = document.getElementById(`btn-${m}`);
+                if (btn) {
+                    if (m === mode) {
+                        btn.className = 'px-2.5 py-1.5 rounded-full transition-all duration-200 font-medium text-cyan-400 bg-slate-800 flex items-center gap-1';
+                    } else {
+                        btn.className = 'px-2.5 py-1.5 rounded-full transition-all duration-200 font-medium text-slate-400 hover:text-slate-200 flex items-center gap-1';
+                    }
+                }
+            });
+
+            if (mode === 'auto') {
+                updateVNTime();
+            } else {
+                applyTheme(mode);
+            }
+        }
+
         updateVNTime();
         setInterval(updateVNTime, 1000);
     </script>
